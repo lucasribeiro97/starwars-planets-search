@@ -14,6 +14,7 @@ export type PlanetType = {
   url: string,
 };
 
-export type ContextType = {
-  planets: PlanetType[],
+export type SearchContextType = {
+  searchTerm: string,
+  setSearchTerm: (term: string) => void;
 };

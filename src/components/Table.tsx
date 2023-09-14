@@ -1,10 +1,11 @@
-import { PlanetType } from '../types';
+import useFetch from '../hooks/useFetch';
+import { useSearch } from '../hooks/useSearch';
 
-type Props = {
-  planets: PlanetType[],
-};
-
-function Table({ planets }: Props) {
+function Table() {
+  const planets = useFetch();
+  const { searchTerm } = useSearch();
+  const filteredPlanets = planets
+    .filter((planet) => planet.name.toLowerCase().includes(searchTerm.toLowerCase()));
   return (
     <table>
       <thead>
@@ -25,7 +26,7 @@ function Table({ planets }: Props) {
         </tr>
       </thead>
       <tbody>
-        {planets && planets.map((planet) => (
+        {filteredPlanets && filteredPlanets.map((planet) => (
           <tr key={ planet.name }>
             <td>{planet.name}</td>
             <td>{planet.rotation_period}</td>
