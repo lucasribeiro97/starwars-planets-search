@@ -4,16 +4,19 @@ import SearchInput from './components/SearchInput';
 import { SearchContextProvider } from './context/SearchContext';
 import SelectFilters from './components/SelectFilters';
 import { FilterProvider } from './context/FilterContext';
+import { PlanetContextProvider } from './context/PlanetContext';
 
 function App() {
   return (
-    <FilterProvider>
-      <SearchContextProvider>
-        <SearchInput />
-        <SelectFilters />
-        <Table />
-      </SearchContextProvider>
-    </FilterProvider>
+    <PlanetContextProvider>
+      <FilterProvider>
+        <SearchContextProvider>
+          <SearchInput />
+          <SelectFilters />
+          <Table />
+        </SearchContextProvider>
+      </FilterProvider>
+    </PlanetContextProvider>
   );
 }
 

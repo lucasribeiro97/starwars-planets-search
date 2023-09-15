@@ -1,48 +1,33 @@
 import { useState } from 'react';
-import useFetch from '../hooks/useFetch';
-import { useFilter } from '../hooks/useFilter';
-import { PlanetType } from '../types';
+import { usePlanets } from '../hooks/usePlanets';
 
 function SelectFilters() {
-  const { filter, setFilter } = useFilter();
-  const planets = useFetch();
-  const [filteredPlanets, setFilteredPlanets] = useState<PlanetType[]>([]);
+  const { filterPlanets } = usePlanets();
+  const [column, setColumn] = useState('population');
+  const [comparison, setComparison] = useState('maior que');
+  const [value, setValue] = useState<number>(0);
 
   const handleColumnChange = (e: { target: { value: any; }; }) => {
-    setFilter({ ...filter, column: e.target.value });
+    setColumn(e.target.value);
   };
 
   const handleComparisonChange = (e: { target: { value: any; }; }) => {
-    setFilter({ ...filter, comparison: e.target.value });
+    setComparison(e.target.value);
   };
 
   const handleValueChange = (e: { target: { value: any; }; }) => {
-    setFilter({ ...filter, value: Number(e.target.value) });
+    setValue(e.target.value);
   };
 
-  function filterPlanets() {
-    const filtered = planets.filter((planet) => {
-      const planetValue = Number(planet[filter.column as keyof PlanetType]);
-      switch (filter.comparison) {
-        case 'maior que':
-          return planetValue > filter.value;
-        case 'menor que':
-          return planetValue < filter.value;
-        case 'igual a':
-          return planetValue === filter.value;
-        default:
-          return true;
-      }
-    });
-
-    setFilteredPlanets(filtered);
-  }
+  const handleButtonClick = () => {
+    filterPlanets(column, comparison, value);
+  };
 
   return (
     <div>
       <select
         data-testid="column-filter"
-        value={ filter.column }
+        value={ column }
         onChange={ handleColumnChange }
       >
         <option value="population">population</option>
@@ -53,7 +38,7 @@ function SelectFilters() {
       </select>
       <select
         data-testid="comparison-filter"
-        value={ filter.comparison }
+        value={ comparison }
         onChange={ handleComparisonChange }
       >
         <option value="maior que">maior que</option>
@@ -61,14 +46,14 @@ function SelectFilters() {
         <option value="igual a">igual a</option>
       </select>
       <input
-        type="text"
+        type="number"
         data-testid="value-filter"
-        value={ Number(filter.value) }
+        value={ value }
         onChange={ handleValueChange }
       />
       <button
         data-testid="button-filter"
-        onClick={ filterPlanets }
+        onClick={ handleButtonClick }
       >
         FILTRAR
       </button>

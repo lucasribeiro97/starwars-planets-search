@@ -1,16 +1,19 @@
-import { useSearch } from '../hooks/useSearch';
+import { useState } from 'react';
+import { usePlanets } from '../hooks/usePlanets';
 
 function SearchInput() {
-  const { searchTerm, setSearchTerm } = useSearch();
+  const { searchPlanets } = usePlanets();
+  const [inputValue, setInputValue] = useState('');
 
   const handleInputChange = (e: { target: { value: any; }; }) => {
-    setSearchTerm(e.target.value);
+    searchPlanets(e.target.value);
+    setInputValue(e.target.value);
   };
 
   return (
     <input
       type="text"
-      value={ searchTerm }
+      value={ inputValue }
       onChange={ handleInputChange }
       data-testid="name-filter"
     />

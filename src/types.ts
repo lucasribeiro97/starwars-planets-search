@@ -14,18 +14,9 @@ export type PlanetType = {
   url: string,
 };
 
-export type SearchContextType = {
-  searchTerm: string,
-  setSearchTerm: (term: string) => void;
-};
-
-export type FilterContextType = {
-  column: string,
-  comparison: string,
-  value: number,
-};
-
-export type SelectContextType = {
-  filter: FilterContextType
-  setFilter: (filter: FilterContextType) => void;
+export type PlanetContextType = {
+  planets: PlanetType[],
+  filteredPlanets: PlanetType[],
+  setPlanets: (planet: PlanetType[]) => void,
+  setFilteredPlanets: (planet: PlanetType[]) => void,
 };

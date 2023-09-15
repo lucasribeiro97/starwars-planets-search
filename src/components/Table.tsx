@@ -1,11 +1,7 @@
-import useFetch from '../hooks/useFetch';
-import { useSearch } from '../hooks/useSearch';
+import { usePlanets } from '../hooks/usePlanets';
 
 function Table() {
-  const planets = useFetch();
-  const { searchTerm } = useSearch();
-  const filteredPlanets = planets
-    .filter((planet) => planet.name.toLowerCase().includes(searchTerm.toLowerCase()));
+  const { filteredPlanets } = usePlanets();
   return (
     <table>
       <thead>

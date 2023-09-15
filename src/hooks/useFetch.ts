@@ -13,7 +13,7 @@ function useFetch() {
       setPlanets(planetData);
     };
     getPlanets();
-  });
+  }, []);
 
   return planets;
 }
