@@ -20,3 +20,9 @@ export type PlanetContextType = {
   setPlanets: (planet: PlanetType[]) => void,
   setFilteredPlanets: (planet: PlanetType[]) => void,
 };
+
+export type FilterType = {
+  column: string,
+  comparison: string,
+  value: number,
+};

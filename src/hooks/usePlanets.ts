@@ -1,7 +1,7 @@
 import { useContext, useEffect } from 'react';
 import { PlanetContext } from '../context/PlanetContext';
 import useFetch from './useFetch';
-import { PlanetType } from '../types';
+import { FilterType, PlanetType } from '../types';
 
 export const usePlanets = () => {
   const planetsData = useFetch();
@@ -22,11 +22,16 @@ export const usePlanets = () => {
     setFilteredPlanets(searchedPlanets);
   };
 
-  const filterPlanets = (column: string, comparison: string, value: number) => {
-    const numberValue = Number(value);
-    const filteredPlanetsData = planets
-      .filter((planet) => {
+  const filterPlanets = (filters: FilterType[]) => {
+    let filteredPlanetsData = [...planets];
+
+    filters.forEach((filter) => {
+      const { column, comparison, value } = filter;
+      const numberValue = Number(value);
+
+      filteredPlanetsData = filteredPlanetsData.filter((planet) => {
         const planetValue = Number(planet[column as keyof PlanetType]);
+
         switch (comparison) {
           case 'maior que':
             return planetValue > numberValue;
@@ -38,6 +43,8 @@ export const usePlanets = () => {
             return true;
         }
       });
+    });
+
     setFilteredPlanets(filteredPlanetsData);
   };
 
