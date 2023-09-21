@@ -52,14 +52,14 @@ function SelectFilters() {
 
   const removeAllFilters = () => {
     setFilters([]);
-    filterPlanets([]); // Remover todas as filtragens
+    filterPlanets([]);
     setAvailableColumns([
       'population',
       'orbital_period',
       'diameter',
       'rotation_period',
       'surface_water',
-    ]); // Restaurar todas as colunas
+    ]);
   };
 
   return (

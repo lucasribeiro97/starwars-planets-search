@@ -46,4 +46,21 @@ test('Testa se os inputs de search e number e o button são exibidos na página'
   expect(inputSearch).toBeInTheDocument();
   expect(inputNumber).toBeInTheDocument();
   expect(filterButton).toBeInTheDocument();
+
+  const selectColumn = screen.getByTestId('column-filter')
+  const comparasion = screen.getByTestId('comparison-filter')
+  const inputValue = screen.getByTestId('value-filter')
+
+  userEvent.selectOptions(selectColumn, 'population');
+  userEvent.selectOptions(comparasion, 'igual a');
+  userEvent.type(inputValue, '15')
+  
+  const buttonFilter = screen.getByTestId('button-filter');
+  
+  userEvent.click(buttonFilter);
+  const filterRender = screen.getByTestId('filter');
+  expect(filterRender).toBeInTheDocument();
+  expect(filterRender).toHaveTextContent('population');
+  expect(filterRender).toHaveTextContent('igual a');
+  expect(filterRender).toHaveTextContent('15');
 });
