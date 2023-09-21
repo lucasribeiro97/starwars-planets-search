@@ -9,7 +9,8 @@ export const usePlanets = () => {
     planets,
     filteredPlanets,
     setPlanets,
-    setFilteredPlanets } = useContext(PlanetContext);
+    setFilteredPlanets,
+  } = useContext(PlanetContext);
 
   useEffect(() => {
     setPlanets(planetsData);

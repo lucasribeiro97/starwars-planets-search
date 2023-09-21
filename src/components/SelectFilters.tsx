@@ -1,4 +1,4 @@
-import { SetStateAction, useState } from 'react';
+import { useState } from 'react';
 import { usePlanets } from '../hooks/usePlanets';
 import { FilterType } from '../types';
 
@@ -8,12 +8,25 @@ function SelectFilters() {
   const [column, setColumn] = useState('population');
   const [comparison, setComparison] = useState('maior que');
   const [value, setValue] = useState(0);
+  const [availableColumns, setAvailableColumns] = useState(
+    [
+      'population',
+      'orbital_period',
+      'diameter',
+      'rotation_period',
+      'surface_water',
+    ],
+  );
 
-  const handleColumnChange = (e: { target: { value: SetStateAction<string>; }; }) => {
+  const filteredAvailableColumns = availableColumns.filter((col) => {
+    return !filters.some((filter) => filter.column === col);
+  });
+
+  const handleColumnChange = (e: { target: { value: string; }; }) => {
     setColumn(e.target.value);
   };
 
-  const handleComparisonChange = (e: { target: { value: SetStateAction<string>; }; }) => {
+  const handleComparisonChange = (e: { target: { value: string; }; }) => {
     setComparison(e.target.value);
   };
 
@@ -24,6 +37,8 @@ function SelectFilters() {
   const handleButtonClick = () => {
     const newFilter = { column, comparison, value };
     setFilters([...filters, newFilter]);
+    setAvailableColumns((prevColumns) => prevColumns.filter((col) => col !== column));
+    setColumn(availableColumns[0]);
     filterPlanets([...filters, newFilter]);
   };
 
@@ -41,11 +56,11 @@ function SelectFilters() {
         onChange={ handleColumnChange }
         data-testid="column-filter"
       >
-        <option value="population">population</option>
-        <option value="orbital_period">orbital_period</option>
-        <option value="diameter">diameter</option>
-        <option value="rotation_period">rotation_period</option>
-        <option value="surface_water">surface_water</option>
+        {filteredAvailableColumns.map((col) => (
+          <option key={ col } value={ col }>
+            {col}
+          </option>
+        ))}
       </select>
       <select
         value={ comparison }

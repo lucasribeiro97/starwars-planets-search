@@ -18,7 +18,8 @@ export function PlanetContextProvider({ children } : { children:ReactNode }) {
         planets,
         filteredPlanets,
         setPlanets,
-        setFilteredPlanets } }
+        setFilteredPlanets,
+      } }
     >
       {children}
     </PlanetContext.Provider>
