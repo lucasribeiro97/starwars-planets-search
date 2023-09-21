@@ -47,6 +47,19 @@ function SelectFilters() {
     updatedFilters.splice(index, 1);
     setFilters(updatedFilters);
     filterPlanets(updatedFilters);
+    setAvailableColumns((prevColumns) => [...prevColumns, filters[index].column]);
+  };
+
+  const removeAllFilters = () => {
+    setFilters([]);
+    filterPlanets([]); // Remover todas as filtragens
+    setAvailableColumns([
+      'population',
+      'orbital_period',
+      'diameter',
+      'rotation_period',
+      'surface_water',
+    ]); // Restaurar todas as colunas
   };
 
   return (
@@ -85,16 +98,22 @@ function SelectFilters() {
       </button>
       <ul>
         {filters.map((filter, index) => (
-          <li key={ index }>
+          <li key={ index } data-testid="filter">
             {filter.column}
             {' '}
             {filter.comparison}
             {' '}
             {filter.value}
-            <button onClick={ () => removeFilter(index) }>Remover</button>
+            <button onClick={ () => removeFilter(index) }>X</button>
           </li>
         ))}
       </ul>
+      <button
+        onClick={ removeAllFilters }
+        data-testid="button-remove-filters"
+      >
+        Remover todas filtragens
+      </button>
     </div>
   );
 }
